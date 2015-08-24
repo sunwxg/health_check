@@ -1,11 +1,16 @@
 from nose.tools import *
-import healthcheck 
+from healthcheck.check import *
 
-def setup():
-    print "SETUP!"
+ioexp = [
+"<ioexp;",
+"EXCHANGE IDENTITY DATA",
+"",
+"IDENTITY",
+"BEIMSC 141/00/00/1  148",
+"",
+"END",
+]
 
-def teardown():
-    print "TEAR DOWN!"
-
-def test_basic():
-    print "I RAN!"
+def test_check_ioexp():
+    for i in ioexp:
+        check_input(i)
