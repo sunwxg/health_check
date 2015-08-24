@@ -1,44 +1,28 @@
+#!/usr/bin/python
+
+from check_function import *
 from string import strip
 
-def get_input():
-    try:
-        return raw_input()
-    except EOFError:
-        exit()
+check_list = {
+    '<ioexp;' : check_ioexp,
+    '<dpwsp;' : check_dpwsp
+}
 
 def print_preline():
     print '-' * 60
 
-#<ioexp;
-#EXCHANGE IDENTITY DATA
-
-#IDENTITY
-#BEIMSC 141/00/00/1  148
-
-#END
-def check_ioexp(input_str):
-    while True:
-        input_str = strip(get_input())
-        if input_str == 'END':
-            return
-        elif input_str == 'IDENTITY':
-            input_str = strip(get_input()).split(" ")[0]
-            
-            print_preline()
-            print 'EXCHANGE IDENTITY:', input_str
-        
-    return
-
-check_list = {
-   '<ioexp;' : check_ioexp
-}
+def print_out(output_str):
+    for i in output_str:
+        print i
 
 def check_input(input_str):
-    input_str = strip(input_str)
+    input_str = ''.join(input_str.split())
     if check_list.has_key(input_str):
-        check_list[input_str](input_str)
+        output_str = check_list[input_str](input_str)
+        print_out(output_str)
 
 def start_input():
+    print_preline()
     try:
         while True:
             input_str = raw_input()
@@ -46,7 +30,6 @@ def start_input():
 
     except EOFError:
         print_preline()
-        print 'end of input'
         exit()
 
 if __name__ == '__main__':
