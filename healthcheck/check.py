@@ -11,6 +11,7 @@ check_list = {
     'PROCESSOR LOAD DATA' : check_plldp,
     'MT MOBILE SUBSCRIBER SURVEY' : check_mgsvp,
     'DEVICE STATE SURVEY' : check_strsp,
+    'RP DATA' : check_exrpp,
 }
 
 def print_preline():

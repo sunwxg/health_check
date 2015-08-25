@@ -74,7 +74,7 @@ def check_allip(input_str):
 
         if re.search(r"APZ", input_str[0]):
             state = 'FAIL' 
-            alarm_str = '\t' + input_str[0] + ": "
+            alarm_str = '-\t' + input_str[0] + ": "
             input_str = strip(get_input())
             output_str.append(alarm_str + input_str)
 
@@ -108,7 +108,7 @@ def check_apamp(input_str):
 
         if re.search(r"FAULTY", input_str):
             state = 'FAIL' 
-            output_str.append('\t' + input_str)
+            output_str.append('-\t' + input_str)
 
         elif input_str == 'END':
             output_str[0] += state
@@ -152,7 +152,7 @@ def check_plldp(input_str):
 
         if re.search(r"PLOAD", input_str):
             input_str = strip(get_input()).split()
-            output_str[0] += '= ' + input_str[1]
+            output_str[0] += '= ' + input_str[1] + '%'
 
         elif input_str == 'END':
             output_str[0] += ' ' + state
@@ -223,4 +223,29 @@ def check_strsp(input_str):
 
         if atoi(input_str[4]) > 0:
             state = 'FAIL'
-            output_str.append("\t" + "\t".join(input_str))
+            output_str.append("-\t" + "\t".join(input_str))
+
+#<exrpp:rp=all;
+#RP DATA
+#
+#RP    STATE  TYPE     TWIN  STATE   DS     MAINT.STATE
+#   0  WO     RPSCB1E                       IDLE
+#   1  WO     RPSCB1E                       IDLE
+#   2  WO     GARP2E                        IDLE
+#   3  WO     GARP2E                        IDLE
+#   4  WO     RPSCB1E                       IDLE
+#END
+def check_exrpp(input_str):
+    output_str = ['#RP DATA: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"AB", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
