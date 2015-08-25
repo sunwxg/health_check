@@ -1,5 +1,5 @@
 import re
-from string import strip
+from string import strip, atoi
 
 def get_input():
     try:
@@ -191,3 +191,36 @@ def check_mgsvp(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+#<strsp:r=all;
+#DEVICE STATE SURVEY
+#R        NDV         NOCC        NIDL        NBLO        RSTAT
+#TC                0           0           0           0  NORES
+#TCT               0           0           0           0  NORES
+#TCONI          1024           0        1024           0  NORES
+#TCIAL1            1           1           0           0  NORES
+#TCIAR1            0           0           0           0  NORES
+#BJNER1O          29           3          26          10  NORES
+#BJNER1I          29           3          26          10  NORES
+#END
+def check_strsp(input_str):
+    output_str = ['#DEVICE STATE SURVEY: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"NBLO", input_str):
+            continue
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
+        
+        input_str = input_str.split()
+        if len(input_str) < 4:
+            continue
+
+        if atoi(input_str[4]) > 0:
+            state = 'FAIL'
+            output_str.append("\t" + "\t".join(input_str))

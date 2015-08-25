@@ -242,3 +242,28 @@ def test_check_mgsvp(monkeypatch):
     except StopIteration:
         return
 
+def test_check_strsp(monkeypatch):
+    strsp = [
+    "DEVICE STATE SURVEY",
+    "R        NDV         NOCC        NIDL        NBLO        RSTAT",
+    "TC                0           0           0           0  NORES",
+    "TCT               0           0           0           0  NORES",
+    "TCONI          1024           0        1024           0  NORES",
+    "TCIAL1            1           1           0           0  NORES",
+    "TCIAR1            0           0           0           0  NORES",
+    "BJNER1O          29           3          26          10  NORES",
+    "BJNER1I          29           3          26          10  NORES",
+    "END",
+    ]
+
+    inputs = strsp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_strsp('<strsp')
+        assert output[0] == '#DEVICE STATE SURVEY: FAIL'
+        assert output[1] == '\tBJNER1O\t29\t3\t26\t10\tNORES'
+        assert output[2] == '\tBJNER1I\t29\t3\t26\t10\tNORES'
+    except StopIteration:
+        return

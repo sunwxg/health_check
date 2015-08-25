@@ -10,6 +10,7 @@ check_list = {
     'AP MAINTENANCE DATA' : check_apamp,
     'PROCESSOR LOAD DATA' : check_plldp,
     'MT MOBILE SUBSCRIBER SURVEY' : check_mgsvp,
+    'DEVICE STATE SURVEY' : check_strsp,
 }
 
 def print_preline():

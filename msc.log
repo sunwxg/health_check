@@ -190,8 +190,8 @@ NGW1O           616          98         518           0  NORES
 NGW1I           616          98         518           0  NORES
 BJCT01O          29           0          29           0  NORES
 BJCT01I          29           0          29           0  NORES
-BJCTS1O         246          82         164           0  NORES
-BJCTS1I         246          82         164           0  NORES
+BJCTS1O         246          82         164          20  NORES
+BJCTS1I         246          82         164          20  NORES
 JITPU2O          60           0          60           0  NORES
 JITPU2I          60           0          60           0  NORES
 JITFC1O          29           0          29           0  NORES
