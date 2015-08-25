@@ -478,3 +478,28 @@ def test_check_chopp(monkeypatch):
         assert output[0] == '#COMMON CHARGING OUTPUT: OK'
     except StopIteration:
         return
+
+def test_check_c7ncp(monkeypatch):
+    c7ncp = [
+    "<c7ncp:sp=all,ssn=all;",
+    "CCITT7 SCCP NETWORK CONFIGURATION DATA",
+    "",
+    "SP             SPID     SPSTATE     BROADCASTSTATUS  SCCPSTATE",
+    "0-9154         BJCU001  ALLOWED     CON              ALLOWED",
+    "",
+    "                        SSN         SUBSYSTEMSTATE   SST",
+    "                        7           ALLOWED          YES",
+    "                        8           ALLOWED          YES",
+    "",
+    "END",
+    ]
+
+    inputs = c7ncp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_c7ncp('<c7ncp')
+        assert output[0] == '#CCITT7 SCCP NETWORK: OK'
+    except StopIteration:
+        return

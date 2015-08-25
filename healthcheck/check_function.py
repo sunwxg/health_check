@@ -459,3 +459,26 @@ def check_chopp(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+
+#<c7ncp:sp=all,ssn=all;
+#CCITT7 SCCP NETWORK CONFIGURATION DATA
+#
+#SP             SPID     SPSTATE     BROADCASTSTATUS  SCCPSTATE
+#0-9154         BJCU001  ALLOWED     CON              ALLOWED
+#
+#                        SSN         SUBSYSTEMSTATE   SST
+#                        7           ALLOWED          YES
+#                        8           ALLOWED          YES
+#
+#END
+def check_c7ncp(input_str):
+    output_str = ['#CCITT7 SCCP NETWORK: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if input_str == 'END':
+            output_str[0] += state
+            return output_str
