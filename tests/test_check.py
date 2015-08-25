@@ -60,6 +60,6 @@ def test_check_dpwsp_fail(monkeypatch):
     monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
     
     try:
-        assert check_dpwsp('<dpwsp;') == ['CP STATE: FAIL: ARMHALT']
+        assert check_dpwsp('<dpwsp;') == ['CP STATE: FAIL: ARM HALT']
     except StopIteration:
         return
