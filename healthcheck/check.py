@@ -19,6 +19,7 @@ check_list = {
     'M3UA ROUTING DATA' : check_m3rsp,
     'COMMON CHARGING OUTPUT ADJUNCT PROCESSOR INTERFACE DATA' : check_chopp,
     'CCITT7 SCCP NETWORK CONFIGURATION DATA' : check_c7ncp,
+    'Directory of K:/ACS/data/RTR/CHS_CP0EX/DATAFILES/REPORTED' : check_rtr_reported,
 }
 
 def print_preline():
@@ -38,7 +39,7 @@ def start_input():
     print_preline()
     try:
         while True:
-            input_str = raw_input()
+            input_str = raw_input().replace('\\', '/')
             check_input(input_str)
 
     except EOFError:

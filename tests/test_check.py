@@ -503,3 +503,36 @@ def test_check_c7ncp(monkeypatch):
         assert output[0] == '#CCITT7 SCCP NETWORK: OK'
     except StopIteration:
         return
+
+def test_check_rtr_reported(monkeypatch):
+    rtr_report = [
+    " Directory of K:\ACS\data\RTR\CHS_CP0EX\DATAFILES\REPORTED",
+    "",
+    "08/19/2015  05:50 AM    <DIR>          .",
+    "08/19/2015  05:50 AM    <DIR>          ..",
+    "07/19/2015  05:59 AM           107,950 RTR-0719-0549.7037",
+    "07/19/2015  06:09 AM           110,281 RTR-0719-0559.7038",
+    "07/19/2015  06:19 AM           110,813 RTR-0719-0609.7039",
+    "07/19/2015  06:29 AM            91,864 RTR-0719-0619.7040",
+    "07/19/2015  06:39 AM           101,472 RTR-0719-0629.7041",
+    "08/19/2015  05:00 AM           227,549 RTR-0819-0450.1495",
+    "08/19/2015  05:10 AM           201,492 RTR-0819-0500.1496",
+    "08/19/2015  05:20 AM           190,835 RTR-0819-0510.1497",
+    "08/19/2015  05:30 AM           178,820 RTR-0819-0520.1498",
+    "08/19/2015  05:40 AM           193,639 RTR-0819-0530.1499",
+    "08/19/2015  05:50 AM           196,873 RTR-0819-0540.1500",
+    "            4464 File(s)    614,975,232 bytes",
+    "               2 Dir(s)  66,478,096,384 bytes free",
+    ]
+
+    inputs = rtr_report
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_rtr_reported('')
+        assert output[0] == '#K:\\ACS\\data\\RTR\\CHS_CP0EX\\DATAFILES\\REPORTED: OK'
+        assert output[1] == '\tRTR-0719-0549.7037'
+        assert output[3] == '\tRTR-0819-0540.1500'
+    except StopIteration:
+        return
