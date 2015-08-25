@@ -367,3 +367,36 @@ def check_ihstp(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+
+#<m3asp;
+#M3UA ASSOCIATION STATUS
+#
+#SAID             STATE  BLSTATE          AUTOBLSTATE
+#BJSAS3           ACT                     
+#
+#BJSAS2           ACT                     
+#
+#BJSAS1           ACT                     
+#
+#END
+def check_m3asp(input_str):
+    output_str = ['#M3UA ASSOCIATION STATUS: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"DOWN", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif re.search(r"INACT", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
+
+

@@ -404,3 +404,28 @@ def test_check_ihstp(monkeypatch):
         assert output[0] == '#IP PORT STATE: OK'
     except StopIteration:
         return
+
+def test_check_m3asp(monkeypatch):
+    m3asp = [
+    "<m3asp;",
+    "M3UA ASSOCIATION STATUS",
+    "",
+    "SAID             STATE  BLSTATE          AUTOBLSTATE",
+    "BJSAS3           ACT                     ",
+    "",
+    "BJSAS2           ACT                     ",
+    "",
+    "BJSAS1           ACT                     ",
+    "",
+    "END",
+    ]
+
+    inputs = m3asp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_m3asp('<ihcop')
+        assert output[0] == '#M3UA ASSOCIATION STATUS: OK'
+    except StopIteration:
+        return
