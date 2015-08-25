@@ -157,3 +157,37 @@ def check_plldp(input_str):
         elif input_str == 'END':
             output_str[0] += ' ' + state
             return output_str
+
+#<mgsvp;
+#MT MOBILE SUBSCRIBER SURVEY
+#
+#HLRADDR             NSUB       NSUBA
+#4-870772001199        10824       7859
+#4-639879990005          221        155
+#4-8613492233333        9179       7262
+#
+#TOTNSUB
+#20224
+#
+#TOTNSUBA
+#15276
+#
+#END
+def check_mgsvp(input_str):
+    output_str = ['#MT MOBILE SUBSCRIBER SURVEY: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"HLRADDR", input_str):
+            output_str.append("\t" + input_str)
+            while True:
+                input_str = (strip(get_input()).split())
+                if len(input_str) == 0:
+                    break
+                output_str.append("\t" + "\t".join(input_str))
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
