@@ -213,3 +213,32 @@ def test_check_plldp(monkeypatch):
         assert output[0] == '#PROCESSOR LOAD DATA: = 1 OK'
     except StopIteration:
         return
+
+def test_check_mgsvp(monkeypatch):
+    mgsvp = [
+    "MT MOBILE SUBSCRIBER SURVEY",
+    "",
+    "HLRADDR             NSUB       NSUBA",
+    "4-870772001199        10824       7859",
+    "4-639879990005          221        155",
+    "4-8613492233333        9179       7262",
+    "",
+    "TOTNSUB",
+    "20224",
+    "",
+    "TOTNSUBA",
+    "15276",
+    "",
+    "END",
+    ]
+
+    inputs = mgsvp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_mgsvp('<mgsvp')
+        assert output[0] == '#MT MOBILE SUBSCRIBER SURVEY: OK'
+    except StopIteration:
+        return
+
