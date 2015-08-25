@@ -336,3 +336,34 @@ def check_ihcop(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+#<ihstp:ipport=all;
+#IP PORT STATE
+#
+#IPPORT         OPSTATE  BLSTATE
+#IP-0-2         BUSY     
+#IP-1-2         BUSY     
+#IP-2-2         BUSY     
+#IP-3-2         BUSY     
+#IP-4-2         BUSY     
+#IP-5-2         BUSY     
+#
+#END
+def check_ihstp(input_str):
+    output_str = ['#IP PORT STATE: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"ABL", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif re.search(r"CBL", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str

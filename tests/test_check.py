@@ -378,3 +378,29 @@ def test_check_ihcop(monkeypatch):
         assert output[1] == '\tIP-0-2  ACTIVE   IP-1-2     ACTIVE'
     except StopIteration:
         return
+
+def test_check_ihstp(monkeypatch):
+    ihstp = [
+    "<ihstp:ipport=all;",
+    "IP PORT STATE",
+    "",
+    "IPPORT         OPSTATE  BLSTATE",
+    "IP-0-2         BUSY     ",
+    "IP-1-2         BUSY     ",
+    "IP-2-2         BUSY     ",
+    "IP-3-2         BUSY     ",
+    "IP-4-2         BUSY     ",
+    "IP-5-2         BUSY     ",
+    "",
+    "END",
+    ]
+
+    inputs = ihstp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_ihstp('<ihcop')
+        assert output[0] == '#IP PORT STATE: OK'
+    except StopIteration:
+        return
