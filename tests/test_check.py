@@ -106,7 +106,7 @@ def test_check_allip_fail(monkeypatch):
     try:
         output = check_allip('<allip')
         assert output[0] == '#CP ALARM: FAIL'
-        assert output[1] == '\tA2/APZ: MT IMEI SUPERVISION LOG FAULT'
+        assert output[1] == '-\tA2/APZ: MT IMEI SUPERVISION LOG FAULT'
     except StopIteration:
         return
 
@@ -167,7 +167,7 @@ def test_check_apamp_fail(monkeypatch):
     try:
         output = check_apamp('<apamp')
         assert output[0] == '#AP MAINTENANCE DATA: FAIL'
-        assert output[1] == '\t1   B     2     192.168.170.2    14000 FAULTY'
+        assert output[1] == '-\t1   B     2     192.168.170.2    14000 FAULTY'
     except StopIteration:
         return
 
@@ -210,7 +210,7 @@ def test_check_plldp(monkeypatch):
     
     try:
         output = check_plldp('<plldp')
-        assert output[0] == '#PROCESSOR LOAD DATA: = 1 OK'
+        assert output[0] == '#PROCESSOR LOAD DATA: = 1% OK'
     except StopIteration:
         return
 
@@ -263,7 +263,32 @@ def test_check_strsp(monkeypatch):
     try:
         output = check_strsp('<strsp')
         assert output[0] == '#DEVICE STATE SURVEY: FAIL'
-        assert output[1] == '\tBJNER1O\t29\t3\t26\t10\tNORES'
-        assert output[2] == '\tBJNER1I\t29\t3\t26\t10\tNORES'
+        assert output[1] == '-\tBJNER1O\t29\t3\t26\t10\tNORES'
+        assert output[2] == '-\tBJNER1I\t29\t3\t26\t10\tNORES'
+    except StopIteration:
+        return
+
+def test_check_exrpp(monkeypatch):
+    exrpp = [
+    "<exrpp:rp=all;",
+    "RP DATA",
+    "",
+    "RP    STATE  TYPE     TWIN  STATE   DS     MAINT.STATE",
+    "   0  WO     RPSCB1E                       IDLE",
+    "   1  WO     RPSCB1E                       IDLE",
+    "   2  WO     GARP2E                        IDLE",
+    "   3  AB     GARP2E                        IDLE",
+    "   4  WO     RPSCB1E                       IDLE",
+    "END",
+    ]
+
+    inputs = exrpp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_exrpp('<exrpp')
+        assert output[0] == '#RP DATA: FAIL'
+        assert output[1] == '-\t3  AB     GARP2E                        IDLE'
     except StopIteration:
         return

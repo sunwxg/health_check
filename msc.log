@@ -217,7 +217,7 @@ RP    STATE  TYPE     TWIN  STATE   DS     MAINT.STATE
    1  WO     RPSCB1E                       IDLE
    2  WO     GARP2E                        IDLE
    3  WO     GARP2E                        IDLE
-   4  WO     RPSCB1E                       IDLE
+   4  AB     RPSCB1E                       IDLE
    5  WO     RPSCB1E                       IDLE
    6  WO     GARP2E                        IDLE
    7  WO     GARP2E                        IDLE
