@@ -5,7 +5,9 @@ from string import strip
 
 check_list = {
     'EXCHANGE IDENTITY DATA' : check_ioexp,
-    'CP STATE' : check_dpwsp
+    'CP STATE' : check_dpwsp,
+    'ALARM LIST' : check_allip,
+    'AP MAINTENANCE DATA' : check_apamp,
 }
 
 def print_preline():
