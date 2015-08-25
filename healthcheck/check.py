@@ -8,6 +8,7 @@ check_list = {
     'CP STATE' : check_dpwsp,
     'ALARM LIST' : check_allip,
     'AP MAINTENANCE DATA' : check_apamp,
+    'PROCESSOR LOAD DATA' : check_plldp,
 }
 
 def print_preline():
