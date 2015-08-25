@@ -14,6 +14,7 @@ check_list = {
     'RP DATA' : check_exrpp,
     'EM DATA' : check_exemp,
     'IP PORT CONNECTION DATA' : check_ihcop,
+    'IP PORT STATE' : check_ihstp,
 }
 
 def print_preline():
