@@ -16,6 +16,8 @@ check_list = {
     'IP PORT CONNECTION DATA' : check_ihcop,
     'IP PORT STATE' : check_ihstp,
     'M3UA ASSOCIATION STATUS' : check_m3asp,
+    'M3UA ROUTING DATA' : check_m3rsp,
+    'COMMON CHARGING OUTPUT ADJUNCT PROCESSOR INTERFACE DATA' : check_chopp,
 }
 
 def print_preline():

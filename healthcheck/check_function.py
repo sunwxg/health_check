@@ -400,3 +400,62 @@ def check_m3asp(input_str):
             return output_str
 
 
+#<m3rsp:dest=all;
+#M3UA ROUTING DATA
+#
+#DEST           SPID         DST    LSHM
+#0-9154         BJCU001      AVA    PP
+#
+#               SAID             PRIO  RST              CW     CWU
+#               BJSAS3              1  EN-ACT-AVA              
+#
+#0-9163         BJCTSTP      AVA    PP
+#
+#               SAID             PRIO  RST              CW     CWU
+#               BJSAS3              1  EN-ACT-AVA              
+#
+#END
+def check_m3rsp(input_str):
+    output_str = ['#M3UA ROUTING DATA: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"DIS", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif re.search(r"INAC", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif re.search(r"UNAVA", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
+
+#<chopp;
+#COMMON CHARGING OUTPUT ADJUNCT PROCESSOR INTERFACE DATA
+#
+#STATUS    BSIZE    OUTP    MSNAME          DEFMSNAME       DEFBSIZE
+#OPEN          4    00000   CHS             CHS                    4
+#END
+def check_chopp(input_str):
+    output_str = ['#COMMON CHARGING OUTPUT: ']
+    state = 'FAIL'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"STATUS", input_str):
+            input_str = strip(get_input()).split()
+            if input_str[0] == 'OPEN' and atoi(input_str[1]) < 100:
+                state = 'OK'
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
