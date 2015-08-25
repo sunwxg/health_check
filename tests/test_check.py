@@ -536,3 +536,24 @@ def test_check_rtr_reported(monkeypatch):
         assert output[3] == '\tRTR-0819-0540.1500'
     except StopIteration:
         return
+
+def test_check_rtr_ready(monkeypatch):
+    rtr_ready = [
+    " Directory of K:\ACS\data\RTR\billing\Ready",
+    "",
+    "08/19/2015  05:52 AM    <DIR>          .",
+    "08/19/2015  05:52 AM    <DIR>          ..",
+    "08/19/2015  05:52 AM    <DIR>          cdrBackup",
+    "               0 File(s)              0 bytes",
+    "               3 Dir(s)  66,478,096,384 bytes free",
+    ]
+
+    inputs = rtr_ready
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_rtr_ready('')
+        assert output[0] == '#K:\\ACS\\data\\RTR\\billing\\Ready: 0 Files : OK'
+    except StopIteration:
+        return

@@ -519,3 +519,24 @@ def check_rtr_reported(input_str):
             return output_str
         
         last_input_str = input_str
+
+
+# Directory of K:\ACS\data\RTR\billing\Ready
+#
+#08/19/2015  05:52 AM    <DIR>          .
+#08/19/2015  05:52 AM    <DIR>          ..
+#08/19/2015  05:52 AM    <DIR>          cdrBackup
+#               0 File(s)              0 bytes
+#               3 Dir(s)  66,478,096,384 bytes free
+def check_rtr_ready(input_str):
+    output_str = ['#K:\\ACS\\data\\RTR\\billing\\Ready: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"bytes", input_str):
+                input_str = input_str.split()
+                output_str[0] += input_str[0] + " Files : " + state
+                return output_str
+
