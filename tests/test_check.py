@@ -429,3 +429,52 @@ def test_check_m3asp(monkeypatch):
         assert output[0] == '#M3UA ASSOCIATION STATUS: OK'
     except StopIteration:
         return
+
+def test_check_m3rsp(monkeypatch):
+    m3rsp = [
+    "<m3rsp:dest=all;",
+    "M3UA ROUTING DATA",
+    "",
+    "DEST           SPID         DST    LSHM",
+    "0-9154         BJCU001      AVA    PP",
+    "",
+    "               SAID             PRIO  RST              CW     CWU",
+    "               BJSAS3              1  EN-ACT-AVA              ",
+    "",
+    "0-9163         BJCTSTP      AVA    PP",
+    "",
+    "               SAID             PRIO  RST              CW     CWU",
+    "               BJSAS3              1  EN-ACT-AVA              ",
+    "",
+    "END",
+    ]
+
+    inputs = m3rsp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_m3rsp('<m3rsp')
+        assert output[0] == '#M3UA ROUTING DATA: OK'
+    except StopIteration:
+        return
+
+def test_check_chopp(monkeypatch):
+    chopp = [
+    '<chopp;',
+    'COMMON CHARGING OUTPUT ADJUNCT PROCESSOR INTERFACE DATA',
+    '',
+    'STATUS    BSIZE    OUTP    MSNAME          DEFMSNAME       DEFBSIZE',
+    'OPEN          4    00000   CHS             CHS                    4',
+    'END',
+    ]
+
+    inputs = chopp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_chopp('<chopp')
+        assert output[0] == '#COMMON CHARGING OUTPUT: OK'
+    except StopIteration:
+        return
