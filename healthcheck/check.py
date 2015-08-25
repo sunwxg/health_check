@@ -13,6 +13,7 @@ check_list = {
     'DEVICE STATE SURVEY' : check_strsp,
     'RP DATA' : check_exrpp,
     'EM DATA' : check_exemp,
+    'IP PORT CONNECTION DATA' : check_ihcop,
 }
 
 def print_preline():

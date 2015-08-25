@@ -318,3 +318,63 @@ def test_check_exemp(monkeypatch):
         assert output[1] == '-\t3  GARP2E  0  OCITS-1                         PRIM          AB'
     except StopIteration:
         return
+
+def test_check_ihcop(monkeypatch):
+    ihcop = [
+    "<ihcop:ipport=all;",
+    "IP PORT CONNECTION DATA",
+    "",
+    "IPPORT  MHROLE   MHRELPORT  CURROLE",
+    "IP-0-2  ACTIVE   IP-1-2     ACTIVE",
+    "",
+    "IPADD             SUBMASK",
+    "10.128.228.50     255.255.255.248",
+    "",
+    "MTU",
+    "1500",
+    "",
+    "IPMIGR          IPBK",
+    "0               ",
+    "",
+    "SVRATE  SVTO  SVMAXTX  SVMINRX",
+    "10      3     2        2",
+    "",
+    "SVI  SVR",
+    "65   82",
+    "",
+    "SVGW",
+    "",
+    "",
+    "IPPORT  MHROLE   MHRELPORT  CURROLE",
+    "IP-1-2  STAND-BY IP-0-2     STAND-BY",
+    "",
+    "IPADD             SUBMASK",
+    "10.128.228.58     255.255.255.248",
+    "",
+    "MTU",
+    "1500",
+    "",
+    "IPMIGR          IPBK",
+    "0               ",
+    "",
+    "SVRATE  SVTO  SVMAXTX  SVMINRX",
+    "10      3     2        2",
+    "",
+    "SVI  SVR",
+    "65   82",
+    "",
+    "SVGW",
+    "",
+    "END",
+    ]
+
+    inputs = ihcop
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_ihcop('<ihcop')
+        assert output[0] == '#IP PORT CONNECTION DATA: OK'
+        assert output[1] == '\tIP-0-2  ACTIVE   IP-1-2     ACTIVE'
+    except StopIteration:
+        return
