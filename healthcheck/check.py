@@ -4,8 +4,8 @@ from check_function import *
 from string import strip
 
 check_list = {
-    '<ioexp;' : check_ioexp,
-    '<dpwsp;' : check_dpwsp
+    'EXCHANGE IDENTITY DATA' : check_ioexp,
+    'CP STATE' : check_dpwsp
 }
 
 def print_preline():
@@ -16,7 +16,7 @@ def print_out(output_str):
         print i
 
 def check_input(input_str):
-    input_str = ''.join(input_str.split())
+    input_str = input_str.strip()
     if check_list.has_key(input_str):
         output_str = check_list[input_str](input_str)
         print_out(output_str)
