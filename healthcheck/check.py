@@ -12,6 +12,7 @@ check_list = {
     'MT MOBILE SUBSCRIBER SURVEY' : check_mgsvp,
     'DEVICE STATE SURVEY' : check_strsp,
     'RP DATA' : check_exrpp,
+    'EM DATA' : check_exemp,
 }
 
 def print_preline():

@@ -249,3 +249,29 @@ def check_exrpp(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+#<exemp:rp=all,em=all;
+#EM DATA
+#
+#RP    TYPE   EM  EQM                       TWIN  CNTRL  PP     STATE
+#   2  GARP2E  0  OCITS-0                         PRIM          WO
+#   2  GARP2E  1  JOB-0                           PRIM          WO
+#
+#   3  GARP2E  0  OCITS-1                         PRIM          WO
+#   3  GARP2E  1  JOB-1                           PRIM          WO
+#
+#END
+def check_exemp(input_str):
+    output_str = ['#EM DATA: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"AB", input_str):
+            state = 'FAIL' 
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
