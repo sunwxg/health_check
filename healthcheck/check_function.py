@@ -275,3 +275,64 @@ def check_exemp(input_str):
         elif input_str == 'END':
             output_str[0] += state
             return output_str
+
+
+#<ihcop:ipport=all;
+#IP PORT CONNECTION DATA
+#
+#IPPORT  MHROLE   MHRELPORT  CURROLE
+#IP-0-2  ACTIVE   IP-1-2     ACTIVE
+#
+#IPADD             SUBMASK
+#10.128.228.50     255.255.255.248
+#
+#MTU
+#1500
+#
+#IPMIGR          IPBK
+#0               
+#
+#SVRATE  SVTO  SVMAXTX  SVMINRX
+#10      3     2        2
+#
+#SVI  SVR
+#65   82
+#
+#SVGW
+#
+#
+#IPPORT  MHROLE   MHRELPORT  CURROLE
+#IP-1-2  STAND-BY IP-0-2     STAND-BY
+#
+#IPADD             SUBMASK
+#10.128.228.58     255.255.255.248
+#
+#MTU
+#1500
+#
+#IPMIGR          IPBK
+#0               
+#
+#SVRATE  SVTO  SVMAXTX  SVMINRX
+#10      3     2        2
+#
+#SVI  SVR
+#65   82
+#
+#SVGW
+#
+#END
+def check_ihcop(input_str):
+    output_str = ['#IP PORT CONNECTION DATA: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"IPPORT", input_str):
+            input_str = strip(get_input())
+            output_str.append('\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
