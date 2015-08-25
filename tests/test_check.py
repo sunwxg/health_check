@@ -292,3 +292,29 @@ def test_check_exrpp(monkeypatch):
         assert output[1] == '-\t3  AB     GARP2E                        IDLE'
     except StopIteration:
         return
+
+def test_check_exemp(monkeypatch):
+    exemp = [
+    "<exemp:rp=all,em=all;",
+    "EM DATA",
+    "",
+    "RP    TYPE   EM  EQM                       TWIN  CNTRL  PP     STATE",
+    "   2  GARP2E  0  OCITS-0                         PRIM          WO",
+    "   2  GARP2E  1  JOB-0                           PRIM          WO",
+    "",
+    "   3  GARP2E  0  OCITS-1                         PRIM          AB",
+    "   3  GARP2E  1  JOB-1                           PRIM          WO",
+    "",
+    "END",
+    ]
+
+    inputs = exemp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+    
+    try:
+        output = check_exemp('<exemp')
+        assert output[0] == '#EM DATA: FAIL'
+        assert output[1] == '-\t3  GARP2E  0  OCITS-1                         PRIM          AB'
+    except StopIteration:
+        return

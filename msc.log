@@ -248,7 +248,7 @@ RP    TYPE   EM  EQM                       TWIN  CNTRL  PP     STATE
    8  GARP2E  1  SCTP-0                          PRIM          WO
 
    9  GARP2E  0  IP-1                            PRIM          WO
-   9  GARP2E  1  SCTP-1                          PRIM          WO
+   9  GARP2E  1  SCTP-1                          PRIM          AB
 
   10  GARP2E  0  GCPH-2                          PRIM          WO
 
