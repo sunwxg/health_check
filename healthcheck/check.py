@@ -18,6 +18,7 @@ check_list = {
     'M3UA ASSOCIATION STATUS' : check_m3asp,
     'M3UA ROUTING DATA' : check_m3rsp,
     'COMMON CHARGING OUTPUT ADJUNCT PROCESSOR INTERFACE DATA' : check_chopp,
+    'CCITT7 SCCP NETWORK CONFIGURATION DATA' : check_c7ncp,
 }
 
 def print_preline():
