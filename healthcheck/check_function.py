@@ -650,3 +650,61 @@ def check_alist(input_str):
         output_str[0] += state
         return output_str
 
+#K:\ACS\data\RTR\billing\Ready>cluster node
+#Listing status for all available nodes:
+#
+#Node           Node ID Status
+#-------------- ------- ---------------------
+#BJMSAPG1A            1 Up
+#BJMSAPG1B            2 Up
+def check_cluster_node(input_str):
+    output_str = ['#cluster node: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"---", input_str):
+            for i in range(2):
+                input_str = strip(get_input()).split()
+                if len(input_str) < 3:
+                    state = 'FAIL'
+                elif input_str[2] != 'Up':
+                    state = 'FAIL'
+                    output_str.append('-\t' + " ".join(input_str))
+            output_str[0] += state
+            return output_str
+
+
+#K:\ACS\data\RTR\billing\Ready>cluster res
+#Listing status for all available resources:
+#
+#Resource             Group                Node            Status
+#-------------------- -------------------- --------------- ------
+#Disks K:             Disk Group           BJMSAPG1A       Online
+#DHCP Service         Disk Group           BJMSAPG1A       Online
+#Share K              Disk Group           BJMSAPG1A       Online
+#Images               Disk Group           BJMSAPG1A       Online
+#stsprov              Disk Group           BJMSAPG1A       Online
+#stsconv              Disk Group           BJMSAPG1A       Online
+#stsopcf              Disk Group           BJMSAPG1A       Online
+#stsmain              Disk Group           BJMSAPG1A       Online
+#
+def check_cluster_res(input_str):
+    output_str = ['#cluster res: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"---", input_str):
+            while True:
+                input_str = strip(get_input())
+                if len(input_str) == 0:
+                    break
+                if not(re.search(r"Online$", input_str)):
+                    state = 'FAIL'
+                    output_str.append('\t' + input_str)
+            
+            output_str[0] += state
+            return output_str

@@ -662,3 +662,24 @@ def test_check_alist(monkeypatch):
         assert output[0] == '#alist: OK'
     except StopIteration:
         return
+
+def test_check_cluster_node(monkeypatch):
+    cluster_node = [
+    "Listing status for all available nodes:",
+    "",
+    "Node           Node ID Status",
+    "-------------- ------- ---------------------",
+    "BJMSAPG1A            1 Up",
+    "BJMSAPG1B            2 Up",
+    "",
+    ]
+
+    inputs = cluster_node 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_cluster_node('')
+        assert output[0] == '#cluster node: OK'
+    except StopIteration:
+        return
