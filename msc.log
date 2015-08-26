@@ -5457,7 +5457,7 @@ SSU FOLDER QUOTA SUPERVISION TABLE
 
 Folder name:                  K:\ACS\DATA
 Quota limit:                  71.00GB
-Current folder size:          4.09GB (6% of quota limit)
+Current folder size:          4.09GB (99% of quota limit)
 A2 alarm level:               8% free space
 A2 cease level:               10% free space
 A1 alarm level:               4% free space
@@ -5619,7 +5619,7 @@ A1 cease level:               6% free space
 K:\ACS\data\RTR\billing\Ready>vxdisk list
 Name             MediaName   Diskgroup         DiskStyle  Size(MB)  FreeSpace(MB)   Status       EnclosureID      P#C#T#L#
 Harddisk0                   BasicGroup           MBR      140270     70145      Uninitialized    DISKS@BJMSAPG1A  P1C0T0L0
-Harddisk1          Disk1    DataDisk             MBR      286095     0          Imported                          P1C0T3L0
+Harddisk1          Disk1    DataDisk             MBR      286095     0          fail                          P1C0T3L0
 Harddisk2          Disk2    DataDisk             MBR      286095     0          Imported                          P1C0T7L0
 Harddisk3                   BasicGroup           MBR      1935       940        Uninitialized    DISKS@BJMSAPG1A  P0C0T0L0
 

@@ -683,3 +683,91 @@ def test_check_cluster_node(monkeypatch):
         assert output[0] == '#cluster node: OK'
     except StopIteration:
         return
+
+def test_check_cluster_res(monkeypatch):
+    cluster_res = [
+    "Listing status for all available resources:",
+    "",
+    "Resource             Group                Node            Status",
+    "-------------------- -------------------- --------------- ------",
+    "Disks K:             Disk Group           BJMSAPG1A       Online",
+    "DHCP Service         Disk Group           BJMSAPG1A       Online",
+    "Share K              Disk Group           BJMSAPG1A       Online",
+    "Images               Disk Group           BJMSAPG1A       Online",
+    "stsprov              Disk Group           BJMSAPG1A       Online",
+    "stsconv              Disk Group           BJMSAPG1A       Online",
+    "stsopcf              Disk Group           BJMSAPG1A       Online",
+    "stsmain              Disk Group           BJMSAPG1A       Online",
+    "",
+    ]
+
+    inputs = cluster_res
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_cluster_res('')
+        assert output[0] == '#cluster res: OK'
+    except StopIteration:
+        return
+
+
+def test_check_ssuls(monkeypatch):
+    ssuls = [
+    "AP CONFIGURATION TYPE",
+    "",
+    "MSC",
+    "",
+    "",
+    "SSU FOLDER QUOTA SUPERVISION TABLE",
+    "",
+    "Folder name:                  K:\ACS\DATA",
+    "Quota limit:                  71.00GB",
+    "Current folder size:          4.09GB (99% of quota limit)",
+    "A2 alarm level:               8% free space",
+    "A2 cease level:               10% free space",
+    "A1 alarm level:               4% free space",
+    "A1 cease level:               6% free space",
+    "",
+    "",
+    "Folder name:                  K:\ACS\DATA\ACA",
+    "Quota limit:                  4.00GB",
+    "Current folder size:          1.64MB (0% of quota limit)",
+    "A2 alarm level:               8% free space",
+    "A2 cease level:               10% free space",
+    "A1 alarm level:               4% free space",
+    "A1 cease level:               6% free space",
+    "",
+    "c:>alist",
+    ]
+
+    inputs = ssuls
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_ssuls('')
+        assert output[0] == '#disk size: FAIL'
+    except StopIteration:
+        return
+
+def test_check_vxdisk(monkeypatch):
+    vxdisk = [
+    "Name             MediaName   Diskgroup      DiskStyle  Size(MB)  FreeSpace(MB)   Status       EnclosureID      P#C#T#L#",
+    "Harddisk0                   BasicGroup        MBR      140270     70145      Uninitialized    DISKS@BJMSAPG1A  P1C0T0L0",
+    "Harddisk1          Disk1    DataDisk          MBR      286095     0          Imported                          P1C0T3L0",
+    "Harddisk2          Disk2    DataDisk          MBR      286095     0          Imported                          P1C0T7L0",
+    "Harddisk3                   BasicGroup        MBR      1935       940        Uninitialized    DISKS@BJMSAPG1A  P0C0T0L0",
+    "",
+    "c:>alist",
+    ] 
+
+    inputs = vxdisk 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_vxdisk('')
+        assert output[0] == '#raid state: OK'
+    except StopIteration:
+        return
