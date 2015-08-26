@@ -576,3 +576,40 @@ def test_check_lmpfp(monkeypatch):
         assert output[0] == '#LICENSE MANAGEMENT PARAMETERS FAULT LOG: OK'
     except StopIteration:
         return
+
+def test_check_sybfp(monkeypatch):
+    sybfp = [
+    "SYSTEM BACKUP FILES",
+    "",
+    "FILE                           EXCHANGE",
+    "RELFSW0                        BEIMSC 141/00/00/1  147",
+    "",
+    "SUBFILE          OUTPUTTIME    COMMANDLOG",
+    "SDD              150819 0200   -",
+    "LDD1             150819 0200   0000864",
+    "LDD2             150818 0200   0000863",
+    "PS               150529 1118   -",
+    "RS               150529 1118   -",
+    "",
+    "",
+    "FILE                           EXCHANGE",
+    "RELFSW1                        BEIMSC 141/00/00/1  146",
+    "",
+    "SUBFILE          OUTPUTTIME    COMMANDLOG",
+    "SDD              150529 0200   -",
+    "LDD1             150529 0200   0000781",
+    "LDD2             150528 0200   0000780",
+    "PS               150408 0334   -",
+    "RS               150408 0334   -",
+    "END",
+    ]
+
+    inputs = sybfp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_sybfp('')
+        assert output[0] == '#SYSTEM BACKUP FILES: OK'
+    except StopIteration:
+        return

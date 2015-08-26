@@ -496,9 +496,42 @@ def check_lmpfp(input_str):
     while True:
         input_str = strip(get_input())
 
-        if re.search(r"NO DATA", input_str) == None:
+        if not(re.search(r"'NO DATA'", input_str) == None):
             state = 'FAIL'
             output_str.append('-\t' + input_str)
+
+        if input_str == 'END':
+            output_str[0] += state
+            return output_str
+
+
+#SYSTEM BACKUP FILES
+#
+#FILE                           EXCHANGE
+#RELFSW0                        BEIMSC 141/00/00/1  147
+#
+#SUBFILE          OUTPUTTIME    COMMANDLOG
+#SDD              150819 0200   -
+#LDD1             150819 0200   0000864
+#LDD2             150818 0200   0000863
+#PS               150529 1118   -
+#RS               150529 1118   -
+#END
+def check_sybfp(input_str):
+    output_str = ['#SYSTEM BACKUP FILES: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"RELFSW0", input_str):
+            output_str.append('\tRELFSW0')
+            for i in range(2):
+                input_str = strip(get_input())
+            for i in range(5):
+                input_str = strip(get_input())
+                if input_str.split()[3] != '-':
+                    output_str.append('\t' + input_str)
 
         elif input_str == 'END':
             output_str[0] += state
