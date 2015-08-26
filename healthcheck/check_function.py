@@ -637,7 +637,7 @@ def check_rtr_ready(input_str):
 #K:\ACS\data\RTR\billing\Ready>alist
 #
 def check_alist(input_str):
-    output_str = ['#alist: ']
+    output_str = ['#ALIST: ']
     state = 'OK'
 
     while True:
@@ -658,7 +658,7 @@ def check_alist(input_str):
 #BJMSAPG1A            1 Up
 #BJMSAPG1B            2 Up
 def check_cluster_node(input_str):
-    output_str = ['#cluster node: ']
+    output_str = ['#CLUSTER NODE: ']
     state = 'OK'
 
     while True:
@@ -691,7 +691,7 @@ def check_cluster_node(input_str):
 #stsmain              Disk Group           BJMSAPG1A       Online
 #
 def check_cluster_res(input_str):
-    output_str = ['#cluster res: ']
+    output_str = ['#CLUSTER RES: ']
     state = 'OK'
 
     while True:
@@ -736,7 +736,7 @@ def check_cluster_res(input_str):
 #A1 cease level:               6% free space
 #
 def check_ssuls(input_str):
-    output_str = ['#disk size: ']
+    output_str = ['#DISK SIZE: ']
     state = 'OK'
 
     while True:
@@ -769,7 +769,7 @@ def check_ssuls(input_str):
 #Harddisk3                   BasicGroup        MBR      1935       940        Uninitialized    DISKS@BJMSAPG1A  P0C0T0L0
 #
 def check_vxdisk(input_str):
-    output_str = ['#raid state: ']
+    output_str = ['#RAID STATE: ']
     state = 'OK'
 
     while True:
@@ -784,4 +784,38 @@ def check_vxdisk(input_str):
             output_str[0] += state
             output_str.append(input_str)
             output_str.append(True)
+            return output_str
+
+
+# Directory of k:\images\Nodea
+#
+#08/06/2015  02:11 AM    <DIR>          .
+#08/06/2015  02:11 AM    <DIR>          ..
+#07/07/2015  02:39 AM     2,392,627,687 Auto_BJMSAPG1A_20150707_023212.zip
+#08/06/2015  02:11 AM     2,390,432,466 Auto_BJMSAPG1A_20150806_020341.zip
+#               2 File(s)  4,783,060,153 bytes
+#
+# Directory of k:\images\Nodeb
+#
+#08/06/2015  02:39 AM    <DIR>          .
+#08/06/2015  02:39 AM    <DIR>          ..
+#07/07/2015  02:28 AM     2,466,321,530 Auto_BJMSAPG1B_20150707_021957.zip
+#08/06/2015  02:39 AM     2,465,310,521 Auto_BJMSAPG1B_20150806_023024.zip
+#               2 File(s)  4,931,632,051 bytes
+#
+#     Total Files Listed:
+#               4 File(s)  9,714,692,204 bytes
+#               8 Dir(s)   6,391,418,880 bytes free
+def check_images(input_str):
+    output_str = ['#APG BACKUP: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('.zip', input_str):
+            output_str.append('\t' + input_str.split()[4])
+        
+        elif re.search('bytes', input_str):
+            output_str[0] += state
             return output_str

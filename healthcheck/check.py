@@ -29,6 +29,8 @@ check_list = {
     'cluster res' : check_cluster_res,
     'ssuls -l' : check_ssuls,
     'vxdisk list' : check_vxdisk,
+    'Directory of k:/images/Nodea' : check_images,
+    'Directory of k:/images/Nodeb' : check_images,
 }
 
 def print_preline():

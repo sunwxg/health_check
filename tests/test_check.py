@@ -659,7 +659,7 @@ def test_check_alist(monkeypatch):
 
     try:
         output = check_alist('')
-        assert output[0] == '#alist: OK'
+        assert output[0] == '#ALIST: OK'
     except StopIteration:
         return
 
@@ -680,7 +680,7 @@ def test_check_cluster_node(monkeypatch):
 
     try:
         output = check_cluster_node('')
-        assert output[0] == '#cluster node: OK'
+        assert output[0] == '#CLUSTER NODE: OK'
     except StopIteration:
         return
 
@@ -707,7 +707,7 @@ def test_check_cluster_res(monkeypatch):
 
     try:
         output = check_cluster_res('')
-        assert output[0] == '#cluster res: OK'
+        assert output[0] == '#CLUSTER RES: OK'
     except StopIteration:
         return
 
@@ -747,7 +747,7 @@ def test_check_ssuls(monkeypatch):
 
     try:
         output = check_ssuls('')
-        assert output[0] == '#disk size: FAIL'
+        assert output[0] == '#DISK SIZE: FAIL'
     except StopIteration:
         return
 
@@ -768,6 +768,41 @@ def test_check_vxdisk(monkeypatch):
 
     try:
         output = check_vxdisk('')
-        assert output[0] == '#raid state: OK'
+        assert output[0] == '#RAID STATE: OK'
+    except StopIteration:
+        return
+
+def test_check_images(monkeypatch):
+    images = [
+    " Directory of k:\images\Nodea",
+    "",
+    "08/06/2015  02:11 AM    <DIR>          .",
+    "08/06/2015  02:11 AM    <DIR>          ..",
+    "07/07/2015  02:39 AM     2,392,627,687 Auto_BJMSAPG1A_20150707_023212.zip",
+    "08/06/2015  02:11 AM     2,390,432,466 Auto_BJMSAPG1A_20150806_020341.zip",
+    "               2 File(s)  4,783,060,153 bytes",
+    "",
+    " Directory of k:\images\Nodeb",
+    "",
+    "08/06/2015  02:39 AM    <DIR>          .",
+    "08/06/2015  02:39 AM    <DIR>          ..",
+    "07/07/2015  02:28 AM     2,466,321,530 Auto_BJMSAPG1B_20150707_021957.zip",
+    "08/06/2015  02:39 AM     2,465,310,521 Auto_BJMSAPG1B_20150806_023024.zip",
+    "               2 File(s)  4,931,632,051 bytes",
+    "",
+    "     Total Files Listed:",
+    "               4 File(s)  9,714,692,204 bytes",
+    "               8 Dir(s)   6,391,418,880 bytes free",
+    "",
+    "c:>alist",
+    ]
+
+    inputs = images
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_images('')
+        assert output[0] == '#APG BACKUP: OK'
     except StopIteration:
         return
