@@ -25,6 +25,8 @@ check_list = {
     'SYSTEM BACKUP FILES' : check_sybfp,
     'TIME' : check_caclp,
     'alist' : check_alist,
+    'cluster node' : check_cluster_node,
+    'cluster res' : check_cluster_res,
 }
 
 def print_preline():

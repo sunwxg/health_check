@@ -5343,12 +5343,19 @@ Node           Node ID Status
 BJMSAPG1A            1 Up
 BJMSAPG1B            2 Up
 
+K:\ACS\data\RTR\billing\Ready>cluster node
+Listing status for all available nodes:
+
+Node           Node ID Status
+-------------- ------- ---------------------
+BJMSAPG1A            1 Up
+
 K:\ACS\data\RTR\billing\Ready>cluster res
 Listing status for all available resources:
 
 Resource             Group                Node            Status
 -------------------- -------------------- --------------- ------
-Disks K:             Disk Group           BJMSAPG1A       Online
+Disks K:             Disk Group           BJMSAPG1A       pending
 DHCP Service         Disk Group           BJMSAPG1A       Online
 Share K              Disk Group           BJMSAPG1A       Online
 Images               Disk Group           BJMSAPG1A       Online
