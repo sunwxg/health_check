@@ -21,6 +21,8 @@ check_list = {
     'CCITT7 SCCP NETWORK CONFIGURATION DATA' : check_c7ncp,
     'Directory of K:/ACS/data/RTR/CHS_CP0EX/DATAFILES/REPORTED' : check_rtr_reported,
     'Directory of K:/ACS/data/RTR/billing/Ready' : check_rtr_ready,
+    'LICENSE MANAGEMENT PARAMETERS FAULT LOG' : check_lmpfp,
+    'SYSTEM BACKUP FILES' : check_sybfp,
 }
 
 def print_preline():
