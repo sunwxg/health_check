@@ -24,6 +24,7 @@ check_list = {
     'LICENSE MANAGEMENT PARAMETERS FAULT LOG' : check_lmpfp,
     'SYSTEM BACKUP FILES' : check_sybfp,
     'TIME' : check_caclp,
+    'alist' : check_alist,
 }
 
 def print_preline():
@@ -35,10 +36,17 @@ def print_out(output_str):
         print i
 
 def check_input(input_str):
-    input_str = input_str.strip()
-    if check_list.has_key(input_str):
-        output_str = check_list[input_str](input_str)
-        print_out(output_str)
+    input_str = input_str.strip().split('>')
+    if len(input_str) == 1:
+        # CP command
+        if check_list.has_key(input_str[0]):
+            output_str = check_list[input_str[0]](input_str)
+            print_out(output_str)
+    else:
+        # APG command
+        if check_list.has_key(input_str[1]):
+            output_str = check_list[input_str[1]](input_str)
+            print_out(output_str)
 
 def start_input():
     try:

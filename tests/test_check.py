@@ -646,3 +646,19 @@ def test_check_caclp(monkeypatch):
         assert output[0] == '#TIME: OK'
     except StopIteration:
         return
+
+def test_check_alist(monkeypatch):
+    alist = [
+#    "K:\ACS\data\RTR\billing\Ready>alist",
+    "",
+    ]
+
+    inputs = alist 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_alist('')
+        assert output[0] == '#alist: OK'
+    except StopIteration:
+        return
