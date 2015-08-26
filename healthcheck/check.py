@@ -27,6 +27,7 @@ def print_preline():
     print '-' * 60
 
 def print_out(output_str):
+    print_preline()
     for i in output_str:
         print i
 
@@ -37,7 +38,6 @@ def check_input(input_str):
         print_out(output_str)
 
 def start_input():
-    print_preline()
     try:
         while True:
             input_str = raw_input().replace('\\', '/')

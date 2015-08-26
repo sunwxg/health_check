@@ -557,3 +557,22 @@ def test_check_rtr_ready(monkeypatch):
         assert output[0] == '#K:\\ACS\\data\\RTR\\billing\\Ready: 0 Files : OK'
     except StopIteration:
         return
+
+def test_check_lmpfp(monkeypatch):
+    lmpfp = [
+    "<lmpfp;",
+    "LICENSE MANAGEMENT PARAMETERS FAULT LOG",
+    "NO DATA",
+    "",
+    "END",
+    ]
+
+    inputs = lmpfp
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_lmpfp('')
+        assert output[0] == '#LICENSE MANAGEMENT PARAMETERS FAULT LOG: OK'
+    except StopIteration:
+        return
