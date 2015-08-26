@@ -744,10 +744,12 @@ def check_ssuls(input_str):
 
         if re.search('Folder name', input_str):
             folder_name = input_str.split()[2]
+
             for i in range(2):
                 input_str = strip(get_input())
             current_size = re.search('(\d*)%', input_str).group(1)
             alarm_size = re.search('(\d*)%', strip(get_input())).group(1)
+
             if (atoi(current_size) > (100 - atoi(alarm_size))):
                 state = 'FAIL'
                 output_str.append('-\t' + folder_name + "\tcurrent size=" 
