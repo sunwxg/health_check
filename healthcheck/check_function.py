@@ -629,7 +629,24 @@ def check_rtr_ready(input_str):
         input_str = strip(get_input())
 
         if re.search(r"bytes", input_str):
-                input_str = input_str.split()
-                output_str[0] += input_str[0] + " Files : " + state
-                return output_str
+            input_str = input_str.split()
+            output_str[0] += input_str[0] + " Files : " + state
+            return output_str
+
+
+#K:\ACS\data\RTR\billing\Ready>alist
+#
+def check_alist(input_str):
+    output_str = ['#alist: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if len(input_str.split()) != 0:
+            print input_str
+            state = 'FAIL'
+
+        output_str[0] += state
+        return output_str
 
