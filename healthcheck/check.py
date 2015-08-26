@@ -23,6 +23,7 @@ check_list = {
     'Directory of K:/ACS/data/RTR/billing/Ready' : check_rtr_ready,
     'LICENSE MANAGEMENT PARAMETERS FAULT LOG' : check_lmpfp,
     'SYSTEM BACKUP FILES' : check_sybfp,
+    'TIME' : check_caclp,
 }
 
 def print_preline():
