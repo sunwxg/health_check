@@ -704,7 +704,84 @@ def check_cluster_res(input_str):
                     break
                 if not(re.search(r"Online$", input_str)):
                     state = 'FAIL'
-                    output_str.append('\t' + input_str)
+                    output_str.append('-\t' + input_str)
             
             output_str[0] += state
+            return output_str
+
+
+#K:\ACS\data\RTR\billing\Ready>ssuls -l
+#AP CONFIGURATION TYPE
+#
+#MSC
+#
+#
+#SSU FOLDER QUOTA SUPERVISION TABLE
+#
+#Folder name:                  K:\ACS\DATA
+#Quota limit:                  71.00GB
+#Current folder size:          4.09GB (6% of quota limit)
+#A2 alarm level:               8% free space
+#A2 cease level:               10% free space
+#A1 alarm level:               4% free space
+#A1 cease level:               6% free space
+#
+#
+#Folder name:                  K:\ACS\DATA\ACA
+#Quota limit:                  4.00GB
+#Current folder size:          1.64MB (0% of quota limit)
+#A2 alarm level:               8% free space
+#A2 cease level:               10% free space
+#A1 alarm level:               4% free space
+#A1 cease level:               6% free space
+#
+def check_ssuls(input_str):
+    output_str = ['#disk size: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('Folder name', input_str):
+            folder_name = input_str.split()[2]
+            for i in range(2):
+                input_str = strip(get_input())
+            current_size = re.search('(\d*)%', input_str).group(1)
+            alarm_size = re.search('(\d*)%', strip(get_input())).group(1)
+            if (atoi(current_size) > (100 - atoi(alarm_size))):
+                state = 'FAIL'
+                output_str.append('-\t' + folder_name + "\tcurrent size=" 
+                        + current_size + '%\talarm level: ' + alarm_size
+                        + '% free space')
+        
+        elif len(input_str.split(">")) > 1:
+            output_str[0] += state
+            output_str.append(input_str)
+            output_str.append(True)
+            return output_str
+
+
+#K:\ACS\data\RTR\billing\Ready>vxdisk list
+#Name             MediaName   Diskgroup      DiskStyle  Size(MB)  FreeSpace(MB)   Status       EnclosureID      P#C#T#L#
+#Harddisk0                   BasicGroup        MBR      140270     70145      Uninitialized    DISKS@BJMSAPG1A  P1C0T0L0
+#Harddisk1          Disk1    DataDisk          MBR      286095     0          Imported                          P1C0T3L0
+#Harddisk2          Disk2    DataDisk          MBR      286095     0          Imported                          P1C0T7L0
+#Harddisk3                   BasicGroup        MBR      1935       940        Uninitialized    DISKS@BJMSAPG1A  P0C0T0L0
+#
+def check_vxdisk(input_str):
+    output_str = ['#raid state: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('Harddisk[12]', input_str):
+            if input_str.split()[6] != 'Imported':
+                state = 'FAIL'
+                output_str.append('-\t' + " ".join(input_str.split())) 
+        
+        elif len(input_str.split(">")) > 1:
+            output_str[0] += state
+            output_str.append(input_str)
+            output_str.append(True)
             return output_str

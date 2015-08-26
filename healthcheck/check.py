@@ -27,6 +27,8 @@ check_list = {
     'alist' : check_alist,
     'cluster node' : check_cluster_node,
     'cluster res' : check_cluster_res,
+    'ssuls -l' : check_ssuls,
+    'vxdisk list' : check_vxdisk,
 }
 
 def print_preline():
@@ -48,7 +50,14 @@ def check_input(input_str):
         # APG command
         if check_list.has_key(input_str[1]):
             output_str = check_list[input_str[1]](input_str)
-            print_out(output_str)
+            if (output_str[len(output_str) - 1] == True):
+                output_str.pop()
+                input_str = output_str.pop()
+                print_out(output_str)
+                check_input(input_str)
+            else:
+                print_out(output_str)
+    return
 
 def start_input():
     try:
