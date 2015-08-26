@@ -53,6 +53,7 @@ def check_input(input_str):
         if check_list.has_key(input_str[1]):
             output_str = check_list[input_str[1]](input_str)
             if (output_str[len(output_str) - 1] == True):
+                # get last input from return value
                 output_str.pop()
                 input_str = output_str.pop()
                 print_out(output_str)
