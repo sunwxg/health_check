@@ -483,6 +483,26 @@ def check_c7ncp(input_str):
             output_str[0] += state
             return output_str
 
+ 
+#<lmpfp;
+#LICENSE MANAGEMENT PARAMETERS FAULT LOG
+#NO DATA
+#
+#END
+def check_lmpfp(input_str):
+    output_str = ['#LICENSE MANAGEMENT PARAMETERS FAULT LOG: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"NO DATA", input_str) == None:
+            state = 'FAIL'
+            output_str.append('-\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
 
 # Directory of K:\ACS\data\RTR\CHS_CP0EX\DATAFILES\REPORTED
 #
