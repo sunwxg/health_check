@@ -613,3 +613,36 @@ def test_check_sybfp(monkeypatch):
         assert output[0] == '#SYSTEM BACKUP FILES: OK'
     except StopIteration:
         return
+
+def test_check_caclp(monkeypatch):
+    caclp = [
+    "<caclp;",
+    "TIME",
+    "",
+    "",
+    "DATE     TIME     SUMMERTIME     DAY      DCAT",
+    "150819   055845   NO             WED      0",
+    "",
+    "",
+    "REFERENCE CLOCKS",
+    "",
+    "RC      DEV     STATE",
+    "",
+    "URC1    JOB-0   ACTIVE",
+    "URC2    JOB-1   BLOCKED",
+    "URC3            NOT CONNECTED",
+    "",
+    "SNTP            NOT CONNECTED",
+    "",
+    "END",
+    ]
+
+    inputs = caclp 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_caclp('')
+        assert output[0] == '#TIME: OK'
+    except StopIteration:
+        return

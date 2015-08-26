@@ -537,6 +537,46 @@ def check_sybfp(input_str):
             output_str[0] += state
             return output_str
 
+
+#<caclp;
+#TIME
+#
+#
+#DATE     TIME     SUMMERTIME     DAY      DCAT
+#150819   055845   NO             WED      0
+#
+#
+#REFERENCE CLOCKS
+#
+#RC      DEV     STATE
+#
+#URC1    JOB-0   ACTIVE
+#URC2    JOB-1   BLOCKED
+#URC3            NOT CONNECTED
+#
+#SNTP            NOT CONNECTED
+#
+#END
+def check_caclp(input_str):
+    output_str = ['#TIME: ']
+    state = 'NO URC ACTIVE: OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search(r"DATE", input_str):
+            output_str.append('\t' + input_str)
+            output_str.append('\t' + strip(get_input()))
+
+        elif re.search(r"URC", input_str) and re.search(r"ACTIVE", input_str):
+            state = 'OK'
+            output_str.append('\t' + input_str)
+
+        elif input_str == 'END':
+            output_str[0] += state
+            return output_str
+
+
 # Directory of K:\ACS\data\RTR\CHS_CP0EX\DATAFILES\REPORTED
 #
 #08/19/2015  05:50 AM    <DIR>          .
