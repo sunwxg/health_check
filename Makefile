@@ -8,7 +8,7 @@ ptest:
 	@py.test -s
 
 script:
-	@cat msc.log | healthcheck/check.py
+	@cat msc.log | ./py.hc
 
 install:
 	@python setup.py install --record 1.log
