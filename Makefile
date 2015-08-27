@@ -10,4 +10,11 @@ ptest:
 script:
 	@cat msc.log | healthcheck/check.py
 
-.PHONY: test vtest ptest script
+install:
+	@python setup.py install --record 1.log
+
+uninstall:
+	@cat 1.log |xargs -I {} rm -rf {}
+	@rm -rf 1.log
+
+.PHONY: test vtest ptest script install uninstall
