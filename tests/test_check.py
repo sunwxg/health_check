@@ -841,3 +841,38 @@ def test_check_mgw_altk(monkeypatch):
         assert output[0] == '#MGW ALARM: FAIL'
     except StopIteration:
         return
+
+def test_check_mgw_lgaevsrm(monkeypatch):
+    lga = [
+    "BJMGW01> lgaevsrm -s 20150801",
+    "",
+    "150819-06:03:02 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "Trying password from ipdatabase file: /gsn/coreUser/moshell//sitefiles/ipdatabase...",
+    "Startdate=20150801.000000, Enddate=20150820.060303",
+    ".....Get /c/logfiles/alarm_event/ALARM_LOG.xml /gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/alarmLog16315.xml ... OK",
+    "Get /c/logfiles/alarm_event/EVENT_LOG.xml /gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/eventLog16315.xml ... OK",
+    "Get /c/logfiles/availability/CELLO_AVAILABILITY2_LOG.xml /gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/availabilityLog16315.xml ... OK",
+    "",
+    "Parsing alarmLog...Done.",
+    "Parsing eventLog...Done.",
+    "Parsing availabilityLog...Done.",
+    "======================================================================================================",
+    "Timestamp (UTC)     Type  Merged Log Entry",
+    "======================================================================================================",
+    "2015-08-01 01:00:36 OTHR  ConfigVersionCreated BJMGW01 BC4001_NDP_6.4.0.0B R10A AXM10101/11 CV=Au_CXP9018138%6_R112A03_150801_0100 UP=CXP9018138/6_R112A03 NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)",
+    "2015-08-01 02:49:43 AL    w MTP3b Link Out of Service           Mtp3bSpItu=2-1208,Mtp3bSls=PMMGW01_SLS,Mtp3bSlItu=PMMGW01_SLC_1 (Paumalu MGw (SLC1) |   Mtp3bSl[froId=16  rpuId=47] RAISED op= dis, av=depFl, usage=IDLE, proc=N_INIT, link=FAIL----- NB: OOS, SUERM: AERM)",
+    "2015-08-01 02:49:53 AL    * MTP3b Link Out of Service           Mtp3bSpItu=2-1208,Mtp3bSls=PMMGW01_SLS,Mtp3bSlItu=PMMGW01_SLC_1 (Paumalu MGw (SLC1) |   Mtp3bSl[froId=16  rpuId=47] RAISED op= dis, av=depFl, usage=IDLE, proc=N_INIT, link=FAIL----- NB: OOS, SUERM: AERM)",
+    "2015-08-01 05:46:48 AL    w MTP3b Link Out of Service           Mtp3bSpItu=2-1208,Mtp3bSls=PMMGW01_SLS,Mtp3bSlItu=PMMGW01_SLC_0 (Paumalu MGw (SLC0) |   Mtp3bSl[froId=15  rpuId=47] RAISED op= dis, av=depFl, usage=IDLE, proc=N_INIT, link=FAIL----- NB: OOS, SUERM: AERM)",
+    "2015-08-01 05:46:59 AL    * MTP3b Link Out of Service           Mtp3bSpItu=2-1208,Mtp3bSls=PMMGW01_SLS,Mtp3bSlItu=PMMGW01_SLC_0 (Paumalu MGw (SLC0) |   Mtp3bSl[froId=15  rpuId=47] RAISED op= dis, av=depFl, usage=IDLE, proc=N_INIT, link=FAIL----- NB: OOS, SUERM: AERM)",
+    "2015-08-01 08:33:21 AL    M MTP3b Route Set Unavailable         Mtp3bSpItu=0-16173,Mtp3bSrs=SBMSC01_SRS (SBMSC01_SRS |  Mtp3bSrs[froId=23  rpuId=47] RAISED op= dis, cong=UNCONGESTED: RofMtp3bSRSStatusChange(2353): MTP_PAUSE_IND FROs:[SR:31:ok,SLS:10:ENBL])",
+    ]
+
+    inputs = lga 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_lgaevsrm('')
+        assert output[0] == '#MGW ALARM LOG: OK'
+    except StopIteration:
+        return
