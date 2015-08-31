@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 from check_function import *
 from string import strip
 
@@ -32,7 +33,9 @@ check_list = {
     'vxdisk list' : check_vxdisk,
     'Directory of k:/images/Nodea' : check_images,
     'Directory of k:/images/Nodeb' : check_images,
+    'altk' : check_mgw_altk,
 }
+
 
 def print_preline():
     print '-' * 60
@@ -42,7 +45,7 @@ def print_out(output_str):
     for i in output_str:
         print i
 
-def check_input(input_str):
+def check_AXE_input(input_str):
     input_str = input_str.strip().split('>')
     if len(input_str) == 1:
         # CP command
@@ -58,16 +61,32 @@ def check_input(input_str):
                 output_str.pop()
                 input_str = output_str.pop()
                 print_out(output_str)
-                check_input(input_str)
+                check_AXE_input(input_str)
             else:
                 print_out(output_str)
     return
 
+def check_MGW_input(input_str):
+    input_str = input_str.strip().split('>')
+    if len(input_str) == 2:
+        if check_list.has_key(input_str[1].strip()):
+            output_str = check_list[input_str[1].strip()](input_str)
+            print_out(output_str)
+
+node = {
+    'axe' : check_AXE_input,
+    'mgw' : check_MGW_input,
+}
+
 def start_input():
+    if len(sys.argv) == 1:
+        sys.argv.append('axe')
+        print sys.argv[1]
+
     try:
         while True:
             input_str = raw_input().replace('\\', '/')
-            check_input(input_str)
+            node[sys.argv[1]](input_str)
 
     except EOFError:
         print_preline()

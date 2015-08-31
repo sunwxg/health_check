@@ -806,3 +806,38 @@ def test_check_images(monkeypatch):
         assert output[0] == '#APG BACKUP: OK'
     except StopIteration:
         return
+
+def test_check_mgw_altk(monkeypatch):
+    altk = [
+    "BJMGW01> altk",
+    "",
+    "150819-06:02:11 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "",
+    "Connecting to 10.128.163.8:56834 (CorbaSecurity=OFF, corba_class=2, java=1.6.0_26, jacoms=R80L06, jacorb=R80LX01)",
+    "Trying file=/gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/ior16289",
+    "Resolving the alarm service in OMS...",
+    "Simple Alarm Client initialized...",
+    "Starting to retrieve active alarms",
+    "Nr of active alarms are: 1",
+    "UNACKNOWLEDGED ALARMS: 0",
+    "====================================================================================================================",
+    "Date & Time (Local) S Specific Problem                    MO (Cause/AdditionalInfo)",
+    "====================================================================================================================",
+    "",
+    "ACKNOWLEDGED ALARMS: 1",
+    "====================================================================================================================",
+    "Date & Time (Local) S Specific Problem                    MO (Cause/AdditionalInfo) Operator",
+    "====================================================================================================================",
+    "2015-05-28 02:39:37 w MTP3b Link Out of Service           Mtp3bSpItu=0-16173,Mtp3bSls=BJCM001_SLS,Mtp3bSlItu=BJCM001_SLC_1 (BJCM001_SLC_1 started tracking on CMA subscribe) dell",
+    ">>> Total: 1 Alarms (0 Critical, 0 Major)",
+    ]
+
+    inputs = altk 
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_altk('')
+        assert output[0] == '#MGW ALARM: FAIL'
+    except StopIteration:
+        return
