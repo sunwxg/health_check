@@ -34,6 +34,7 @@ check_list = {
     'Directory of k:/images/Nodea' : check_images,
     'Directory of k:/images/Nodeb' : check_images,
     'altk' : check_mgw_altk,
+    'lgaevsrm' : check_mgw_lgaevsrm,
 }
 
 
@@ -69,9 +70,22 @@ def check_AXE_input(input_str):
 def check_MGW_input(input_str):
     input_str = input_str.strip().split('>')
     if len(input_str) == 2:
-        if check_list.has_key(input_str[1].strip()):
-            output_str = check_list[input_str[1].strip()](input_str)
-            print_out(output_str)
+        input_str = input_str[1].split()
+        if len(input_str) == 0:
+            return
+
+        input_str = input_str[0].strip()
+        print input_str
+        if check_list.has_key(input_str):
+            output_str = check_list[input_str](input_str)
+            if (output_str[len(output_str) - 1] == True):
+                # get last input from return value
+                output_str.pop()
+                input_str = output_str.pop()
+                print_out(output_str)
+                check_MGW_input(input_str)
+            else:
+                print_out(output_str)
 
 node = {
     'axe' : check_AXE_input,
