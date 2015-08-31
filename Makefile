@@ -9,6 +9,7 @@ ptest:
 
 script:
 	@cat msc.log | ./py.hc
+	@cat mgw.log | ./py.hc mgw
 
 install:
 	@python setup.py install --record 1.log

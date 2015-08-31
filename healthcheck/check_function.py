@@ -823,3 +823,39 @@ def check_images(input_str):
         elif re.search('bytes', input_str):
             output_str[0] += state
             return output_str
+
+#BJMGW01> altk
+#
+#150819-06:02:11 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315
+#
+#Connecting to 10.128.163.8:56834 (CorbaSecurity=OFF, corba_class=2, java=1.6.0_26, jacoms=R80L06, jacorb=R80LX01)
+#Trying file=/gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/ior16289
+#Resolving the alarm service in OMS...
+#Simple Alarm Client initialized...
+#Starting to retrieve active alarms
+#Nr of active alarms are: 1
+#UNACKNOWLEDGED ALARMS: 0
+#====================================================================================================================
+#Date & Time (Local) S Specific Problem                    MO (Cause/AdditionalInfo)
+#====================================================================================================================
+#
+#ACKNOWLEDGED ALARMS: 1
+#====================================================================================================================
+#Date & Time (Local) S Specific Problem                    MO (Cause/AdditionalInfo) Operator
+#====================================================================================================================
+#2015-05-28 02:39:37 w MTP3b Link Out of Service           Mtp3bSpItu=0-16173,Mtp3bSls=BJCM001_SLS,Mtp3bSlItu=BJCM001_SLC_1 (BJCM001_SLC_1 started tracking on CMA subscribe) dell
+#>>> Total: 1 Alarms (0 Critical, 0 Major)
+def check_mgw_altk(input_str):
+    output_str = ['#MGW ALARM: ']
+    state = 'OK'
+    pass
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('Total', input_str):
+            state = 'FAIL'
+            output_str.append('-\t' + input_str.split(' ', 1)[1])
+
+            output_str[0] += state
+            return output_str
