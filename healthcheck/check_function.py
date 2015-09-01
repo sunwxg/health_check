@@ -919,3 +919,42 @@ def check_mgw_lgaevsrm(input_str):
             output_str.append(input_str)
             output_str.append(True)
             return output_str
+
+
+#BJMGW01> st plugInUnit
+
+#150819-06:05:01 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315
+#===================================================================================
+#Proxy  Adm State     Op. State     MO
+#===================================================================================
+  #188  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=10,PlugInUnit=1
+  #214  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=11,PlugInUnit=1
+  #225  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=12,PlugInUnit=1
+  #236  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=13,PlugInUnit=1
+  #952  0 (LOCKED)    1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=22,PlugInUnit=1
+ #1261  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=6,PlugInUnit=1
+ #1298  0 (LOCKED)    1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=7,PlugInUnit=1
+ #1307  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=8,PlugInUnit=1
+ #1335  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=9,PlugInUnit=1
+#===================================================================================
+#Total: 23 MOs
+def check_mgw_st_pluginunit(input_str):
+    print input_str
+    output_str = ['#MGW ST: ']
+    state = 'OK'
+
+    for i in range(5):
+        get_input()
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('ENABLED', input_str):
+            continue
+        if re.search('===', input_str):
+            continue
+        if re.search('Total', input_str):
+            output_str[0] += state
+            return output_str
+        state = 'FAIL'
+        output_str.append('-\t' + input_str)
