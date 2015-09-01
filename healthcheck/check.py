@@ -75,7 +75,6 @@ def check_MGW_input(input_str):
             return
 
         input_str = input_str[0].strip()
-        print input_str
         if check_list.has_key(input_str):
             output_str = check_list[input_str](input_str)
             if (output_str[len(output_str) - 1] == True):

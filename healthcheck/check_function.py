@@ -883,6 +883,23 @@ def check_mgw_altk(input_str):
 #2015-08-01 08:33:21 AL    M MTP3b Route Set Unavailable         Mtp3bSpItu=0-16173,Mtp3bSrs=SBMSC01_SRS (SBMSC01_SRS |  Mtp3bSrs[froId=23  rpuId=47] RAISED op= dis, cong=UNCONGESTED: RofMtp3bSRSStatusChange(2353): MTP_PAUSE_IND FROs:[SR:31:ok,SLS:10:ENBL])
 
 def isPrint(input_str):
+    if input_str.split()[3] == '*':
+        return False
+
+    not_print_list = [
+        'MTP3b Route Set Unavailable',
+        'MTP3b Link Out of Service',
+        'PDH Alarm Indication Signal',
+        'ConfigVersionCreated',
+        'PeriodicLogging',
+        'PDH Remote Defect Indication',
+        'PDH Loss of Frame',
+    ]
+
+    for i in not_print_list:
+        if re.search(i, input_str):
+            return False
+    
     return True
 
 def check_mgw_lgaevsrm(input_str):
@@ -893,9 +910,8 @@ def check_mgw_lgaevsrm(input_str):
         input_str = strip(get_input())
 
         if re.search('^\d{4}-\d{2}-\d{2}', input_str):
-            print input_str
             if isPrint(input_str):
-                output_str.append('\t' + ' '.join(input_str.split()[0-7]))
+                output_str.append('\t' + re.search('^.{66}', input_str).group(0))
                 
         elif len(input_str.split(">")) > 1:
             output_str[0] += state
