@@ -18,4 +18,8 @@ uninstall:
 	@cat 1.log |xargs -I {} rm -rf {}
 	@rm -rf 1.log
 
-.PHONY: test vtest ptest script install uninstall
+pkg:
+	@python setup.py sdist
+	@cp install dist/
+
+.PHONY: test vtest ptest script install uninstall sdist
