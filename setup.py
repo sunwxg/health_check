@@ -10,7 +10,7 @@ config = {
     'install_requires': [],
     'packages': ['healthcheck'],
     'scripts': ['py.hc'],
-    'name': 'health check'
+    'name': 'health_check'
 }
 
 setup(**config)
