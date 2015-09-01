@@ -876,3 +876,33 @@ def test_check_mgw_lgaevsrm(monkeypatch):
         assert output[0] == '#MGW ALARM LOG: OK'
     except StopIteration:
         return
+
+def test_check_mgw_st_pluginunit(monkeypatch):
+    st = [
+    "",
+    "150819-06:05:01 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "===================================================================================",
+    "Proxy  Adm State     Op. State     MO",
+    "===================================================================================",
+    " #188  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=10,PlugInUnit=1",
+    " #214  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=11,PlugInUnit=1",
+    " #225  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=12,PlugInUnit=1",
+    " #236  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=13,PlugInUnit=1",
+    " #952  0 (LOCKED)    1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=22,PlugInUnit=1",
+    "#1261  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=6,PlugInUnit=1",
+    "#1298  0 (LOCKED)    1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=7,PlugInUnit=1",
+    "#1307  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=8,PlugInUnit=1",
+    "#1335  1 (UNLOCKED)  1 (ENABLED)   Equipment=1,Subrack=MAIN,Slot=9,PlugInUnit=1",
+    "===================================================================================",
+    "Total: 23 MOs",
+    ]
+
+    inputs = st
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_st_pluginunit('')
+        assert output[0] == '#MGW ST: OK'
+    except StopIteration:
+        return

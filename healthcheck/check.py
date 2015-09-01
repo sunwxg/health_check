@@ -35,6 +35,7 @@ check_list = {
     'Directory of k:/images/Nodeb' : check_images,
     'altk' : check_mgw_altk,
     'lgaevsrm' : check_mgw_lgaevsrm,
+    'st' : check_mgw_st_pluginunit,
 }
 
 
@@ -94,7 +95,6 @@ node = {
 def start_input():
     if len(sys.argv) == 1:
         sys.argv.append('axe')
-        print sys.argv[1]
 
     try:
         while True:
