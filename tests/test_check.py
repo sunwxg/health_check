@@ -906,3 +906,62 @@ def test_check_mgw_st_pluginunit(monkeypatch):
         assert output[0] == '#MGW ST: OK'
     except StopIteration:
         return
+
+def test_check_cvls(monkeypatch):
+    cvls = [
+    "BJMGW01> cvls",
+    "",
+    "150819-06:05:10 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "",
+    "11 After_Subic_E1_Move_20140116           2014-01-16 03:40 CXP9018138/6_R112A03 NDP6400B standard    admin        none",
+    "12 Before_ChangeBJCT_20140226             2014-02-26 04:28 CXP9018138/6_R112A03 NDP6400B standard    admin        none",
+    "13 Before_Change_CsdGsmFhService_20140820 2014-08-20 06:01 CXP9018138/6_R112A03 NDP6400B standard    admin        none",
+    "14 Au_CXP9018138%6_R112A03_150818_0100    2015-08-18 01:00 CXP9018138/6_R112A03 NDP6400B autocreate  CPP          Daily autocreated CV",
+    "15 Au_CXP9018138%6_R112A03_150819_0100    2015-08-19 01:00 CXP9018138/6_R112A03 NDP6400B autocreate  CPP          Daily autocreated CV",
+    "======================================================================================================================================",
+    ">>> Total: 15 CV's, 1 UP's",
+    ]
+
+    inputs = cvls
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_cvls('')
+        assert output[0] == '#MGW cvls: OK'
+    except StopIteration:
+        return
+
+def test_check_mgw_pst(monkeypatch):
+    pst = [
+    "BJMGW01> pst",
+    "",
+    "150819-06:05:20 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "Connecting to 10.128.163.8:56834 (CorbaSecurity=OFF, corba_class=2, java=1.6.0_26, jacoms=R80L06, jacorb=R80LX01)",
+    "Trying file=/gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/ior16289",
+    "**** Bootstrapping OK",
+    "****",
+    "",
+    "$pmtester_pid = 16522",
+    "",
+    "================================================================================",
+    "  PROXY  SCANNER-NAME                                                  STATE",
+    "================================================================================",
+    "      2  USERDEF.e1ttp.STATS                                           ACTIVE",
+    "      3  USERDEF.Vc12Ttp.STATS                                         ACTIVE",
+    "      4  USERDEF.Vc4Ttp.STATS                                          ACTIVE",
+    "      5  USERDEF.os155spittp.STATS                                     ACTIVE",
+    "      6  PerformanceIndicator                                          ACTIVE",
+    "================================================================================",
+    ">>> Total: 5 Scanners",
+    ]
+
+    inputs = pst
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_pst('')
+        assert output[0] == '#MGW pst: OK'
+    except StopIteration:
+        return

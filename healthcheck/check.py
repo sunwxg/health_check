@@ -36,6 +36,8 @@ check_list = {
     'altk' : check_mgw_altk,
     'lgaevsrm' : check_mgw_lgaevsrm,
     'st' : check_mgw_st_pluginunit,
+    'cvls' : check_mgw_cvls,
+    'pst' : check_mgw_pst,
 }
 
 
