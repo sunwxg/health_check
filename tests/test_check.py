@@ -965,3 +965,36 @@ def test_check_mgw_pst(monkeypatch):
         assert output[0] == '#MGW pst: OK'
     except StopIteration:
         return
+
+def test_check_vols(monkeypatch):
+    vols = [
+    "BJMGW01> vols",
+    "",
+    "150819-06:05:28 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315",
+    "$ vols",
+    "volume      total      used        free   frw device unit",
+    "/              0K     0K 100%     0K 100% FR- ",
+    "/null          0K     0K 100%     0K 100% FRW ",
+    "/gzip          1K     1K 100%     0K   0% -RW none",
+    "/mole          1K     1K 100%     0K   0% -RW none",
+    "/erpdout       1K     1K 100%     0K   0% -RW none",
+    "/ffs        3764K  1884K  50%  1880K  50% FRW ffsdd <0-940>",
+    "/d           683M   326M  48%   356M  52% FRW idedd 0 <4-1399999>",
+    "/c          1147M   611M  53%   536M  47% FRW mirrordd 0 <1400000-3749999>",
+    "/zip           1K     1K 100%     0K   0% -RW none",
+    "/p000800    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>",
+    "/p000500    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>",
+    "/p002400    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>",
+    "/j          1147M   611M  53%   536M  47% FRW /c 0 <1400000-3749999>",
+    "$ ",
+    ]
+
+    inputs = vols
+    input_generator = iter(inputs)
+    monkeypatch.setattr('__builtin__.raw_input', lambda : next(input_generator))
+
+    try:
+        output = check_mgw_vols('')
+        assert output[0] == '#MGW vols: OK'
+    except StopIteration:
+        return

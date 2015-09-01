@@ -38,6 +38,7 @@ check_list = {
     'st' : check_mgw_st_pluginunit,
     'cvls' : check_mgw_cvls,
     'pst' : check_mgw_pst,
+    'vols' : check_mgw_vols,
 }
 
 

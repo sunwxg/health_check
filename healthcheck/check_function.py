@@ -1053,3 +1053,42 @@ def check_mgw_pst(input_str):
         if re.search('Total', input_str):
             output_str[0] += state
             return output_str
+
+
+#BJMGW01> vols
+#
+#150819-06:05:28 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315
+#$ vols
+#volume      total      used        free   frw device unit
+#/              0K     0K 100%     0K 100% FR- 
+#/null          0K     0K 100%     0K 100% FRW 
+#/gzip          1K     1K 100%     0K   0% -RW none
+#/mole          1K     1K 100%     0K   0% -RW none
+#/erpdout       1K     1K 100%     0K   0% -RW none
+#/ffs        3764K  1884K  50%  1880K  50% FRW ffsdd <0-940>
+#/d           683M   326M  48%   356M  52% FRW idedd 0 <4-1399999>
+#/c          1147M   611M  53%   536M  47% FRW mirrordd 0 <1400000-3749999>
+#/zip           1K     1K 100%     0K   0% -RW none
+#/p000800    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>
+#/p000500    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>
+#/p002400    1147M     1M   0%  1145M 100% FRW idedd 0 <1400000-3749999>
+#/j          1147M   611M  53%   536M  47% FRW /c 0 <1400000-3749999>
+#$ 
+def check_mgw_vols(input_str):
+    output_str = ['#MGW vols: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+    
+        if re.search('^/ffs', input_str):
+            output_str.append('\t' + input_str)
+        elif re.search('^/d', input_str):
+            output_str.append('\t' + input_str)
+        elif re.search('^/c', input_str):
+            output_str.append('\t' + input_str)
+
+        elif re.search('$', input_str):
+            if len(input_str) == 1:
+                output_str[0] += state
+                return output_str
