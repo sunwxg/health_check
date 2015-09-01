@@ -998,3 +998,4 @@ def test_check_vols(monkeypatch):
         assert output[0] == '#MGW vols: OK'
     except StopIteration:
         return
+

@@ -4,6 +4,7 @@
 import sys
 from check_function import *
 from string import strip
+from args import args_options
 
 check_list = {
     'EXCHANGE IDENTITY DATA' : check_ioexp,
@@ -98,6 +99,8 @@ node = {
 def start_input():
     if len(sys.argv) == 1:
         sys.argv.append('axe')
+
+    args_options()
 
     try:
         while True:
