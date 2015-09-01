@@ -853,8 +853,9 @@ def check_mgw_altk(input_str):
         input_str = strip(get_input())
 
         if re.search('Total', input_str):
-            state = 'FAIL'
-            output_str.append('-\t' + input_str.split(' ', 1)[1])
+            if atoi(input_str.split()[2]) > 0:
+                state = 'FAIL'
+                output_str.append('-\t' + input_str.split(' ', 1)[1])
 
             output_str[0] += state
             return output_str
