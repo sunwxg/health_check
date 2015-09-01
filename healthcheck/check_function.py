@@ -939,7 +939,6 @@ def check_mgw_lgaevsrm(input_str):
 #===================================================================================
 #Total: 23 MOs
 def check_mgw_st_pluginunit(input_str):
-    print input_str
     output_str = ['#MGW ST: ']
     state = 'OK'
 
@@ -958,3 +957,99 @@ def check_mgw_st_pluginunit(input_str):
             return output_str
         state = 'FAIL'
         output_str.append('-\t' + input_str)
+
+
+#BJMGW01> cvls
+
+#150819-06:05:10 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315
+
+#===================================================================================================================
+#150819-06:05            CV Name                                   Upgrade Package       Release
+#===================================================================================================================
+#Startable:              Au_CXP9018138%6_R112A03_150819_0100       CXP9018138/6_R112A03  NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)
+#Loaded:                 BeforeDeleteMSB_AMC_7_22_20131121         CXP9018138/6_R112A03  NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)
+#Executing:              Au_CXP9018138%6_R112A03_150819_0100       CXP9018138/6_R112A03  NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)
+#Last created:           Au_CXP9018138%6_R112A03_150819_0100       CXP9018138/6_R112A03  NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)
+#-------------------------------------------------------------------------------------------------------------------
+#Current UpgradePkg:     UpgradePackage=CXP9018138%6_R112A03       CXP9018138/6_R112A03  NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2)
+#AutoCreatedCV:          Enabled. Daily backup at 01:00
+#Ongoing CV activity:    0 (IDLE)
+#Rollback status:        Rollback is on
+#Rollback init timer:    30
+#Rollback init counter:  5
+#Rollback counter:       5
+#Rollback list:          s[10] = Au_CXP9018138%6_R112A03_150818_0100 Before_Change_CsdGsmFhService_20140820 Before_ChangeBJCT_20140226 After_Subic_E1_Move_20140116 Before_Subic_E1_Move_20140114 After_AddSubic_20140107 AfterDel_NER_SL1_20140106 BeforeDeleteMSB_AMC_7_22_20131121 BeforeAddEir_20131011 UpgradeR6400B_OK_20130509 
+#======================================================================================================================================
+#UP name              ProductData          CVs LMs PrDate LastCV state                   Release                                     CompatIndex        
+#======================================================================================================================================
+#CXP9018138%6_R112A03 CXP9018138/6_R112A03  15 346 130117 150819 IDLE, UPGRADE_COMPLETED NDP6400B (BC4001_NDP_6.4.0.0B, C13.0-EP4-2) BC4001_NDP_6.4.0.0B
+#======================================================================================================================================
+#Id CV Name                                Creation Date    UpgradePackage       Release  Type        Operator     Comment
+#======================================================================================================================================
+ #1 SU_CXP9018138%6_R112A03_130509_0843    2013-05-09 08:43 CXP9018138/6_R112A03 NDP6400B upgrade_tol CPP          Temp. CV autocreated at SU
+ #2 Fi_CXP9018138%6_R112A03_130509_0854    2013-05-09 08:54 CXP9018138/6_R112A03 NDP6400B other       CPP          Final CV autocreated at SU
+ #3 UpgradeR6400B_OK_20130509              2013-05-09 09:31 CXP9018138/6_R112A03 NDP6400B standard    BjlesRAN     none
+ #4 BeforeAddEir_20131011                  2013-10-11 01:42 CXP9018138/6_R112A03 NDP6400B standard    Administrator  none
+ #5 BeforeDeleteMSB_AMC_7_22_20131121      2013-11-21 08:39 CXP9018138/6_R112A03 NDP6400B standard    Administrator  none
+ #6 BeforeDel_NER_SL1_20140106             2014-01-06 03:09 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+ #7 AfterDel_NER_SL1_20140106              2014-01-06 03:23 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+ #8 Before_AddSubic_20140107               2014-01-07 06:24 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+ #9 After_AddSubic_20140107                2014-01-07 06:34 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+#10 Before_Subic_E1_Move_20140114          2014-01-14 15:42 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+#11 After_Subic_E1_Move_20140116           2014-01-16 03:40 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+#12 Before_ChangeBJCT_20140226             2014-02-26 04:28 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+#13 Before_Change_CsdGsmFhService_20140820 2014-08-20 06:01 CXP9018138/6_R112A03 NDP6400B standard    admin        none
+#14 Au_CXP9018138%6_R112A03_150818_0100    2015-08-18 01:00 CXP9018138/6_R112A03 NDP6400B autocreate  CPP          Daily autocreated CV
+#15 Au_CXP9018138%6_R112A03_150819_0100    2015-08-19 01:00 CXP9018138/6_R112A03 NDP6400B autocreate  CPP          Daily autocreated CV
+#======================================================================================================================================
+#>>> Total: 15 CV's, 1 UP's
+def check_mgw_cvls(input_str):
+    output_str = ['#MGW cvls: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+
+        if re.search('Total', input_str):
+            output_str[0] += state
+            return output_str
+
+
+#BJMGW01> pst
+#
+#150819-06:05:20 10.128.163.8 10.0r MGW_NODE_MODEL_C_1_12 stopfile=/tmp/16315
+#Connecting to 10.128.163.8:56834 (CorbaSecurity=OFF, corba_class=2, java=1.6.0_26, jacoms=R80L06, jacorb=R80LX01)
+#Trying file=/gsn/coreUser/moshell_logfiles/logs_moshell/tempfiles/20150819-060119_16289/ior16289
+#**** Bootstrapping OK
+#****
+#
+#$pmtester_pid = 16522
+#
+#================================================================================
+#  PROXY  SCANNER-NAME                                                  STATE
+#================================================================================
+#      2  USERDEF.e1ttp.STATS                                           ACTIVE
+#      3  USERDEF.Vc12Ttp.STATS                                         ACTIVE
+#      4  USERDEF.Vc4Ttp.STATS                                          ACTIVE
+#      5  USERDEF.os155spittp.STATS                                     ACTIVE
+#      6  PerformanceIndicator                                          ACTIVE
+#================================================================================
+#>>> Total: 5 Scanners
+def check_mgw_pst(input_str):
+    output_str = ['#MGW pst: ']
+    state = 'OK'
+
+    while True:
+        input_str = strip(get_input())
+    
+        if re.search('PROXY', input_str):
+            get_input()
+            while True:
+                input_str = strip(get_input())
+                if re.search('===', input_str):
+                    break
+                output_str.append('\t' + input_str)
+
+        if re.search('Total', input_str):
+            output_str[0] += state
+            return output_str
