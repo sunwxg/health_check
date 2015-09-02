@@ -1,7 +1,13 @@
-In cygwin window command line input:
+Work in Linux or Cygwin.
+
+Open terminal window and input:
 	tar xvzf health_check-0.1.tar.gz
 	cd health_check-0.1
 	python setup.py install
+
+Check installation is successful:
+	$ py.hc --version
+	This py.hc version is 0.1
 
 Useage:
 	py.hc axe <msc.log
