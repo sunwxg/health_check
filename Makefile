@@ -20,9 +20,8 @@ uninstall:
 clean:
 	@find . -name "*.pyc" |xargs -I {} rm -f {}
 
-<<<<<<< Updated upstream
 pkg:
 	@python setup.py sdist
 	@cp install dist/
 
-.PHONY: test vtest ptest script install uninstall sdist clean
+.PHONY: test vtest ptest script install uninstall pkg clean
